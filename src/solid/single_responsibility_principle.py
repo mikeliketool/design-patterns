@@ -1,3 +1,7 @@
+# Though tempting to add persistence to the Journal object this can cause issues later when you
+# need to make a change to how persistence works in general and each object is handline this in
+# a duplicate manner.
+
 class Journal:
     def __init__(self):
         self.entries = []
