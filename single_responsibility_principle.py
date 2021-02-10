@@ -13,10 +13,13 @@ class Journal:
     def __str__(self):
         return '\n'.join(self.entries)
 
-    def save(self, filename):
+
+class PersistenceManager:
+    @staticmethod
+    def save_to_file(data_to_persist, filename):
         file = open(filename, 'w')
-        file.write(str(self))
-        file.close()
+        file.write(str(data_to_persist))
+        file.close
 
     def load(self, filename):
         pass
