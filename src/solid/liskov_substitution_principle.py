@@ -28,7 +28,7 @@ class Rectangle:
     def __str__(self):
         return f'width: {self.width}, height: {self.height}'
 
-
+'''
 class Square(Rectangle):
     def __init__(self, size):
         Rectangle.__init__(self, size, size)
@@ -40,6 +40,15 @@ class Square(Rectangle):
     @Rectangle.height.setter
     def height(self, value):
         self._width = self._height = value
+'''
+
+
+class ShapeFactory:
+    def create_rectangle(self, width, height):
+        return Rectangle(width, height)
+
+    def create_square(self, size):
+        return Rectangle(size, size)
 
 
 def use_it(rc):
@@ -49,8 +58,9 @@ def use_it(rc):
     print(f'Expected an area of {expected} and got an area of {rc.area}')
 
 
-rc = Rectangle(2, 3)
+shape_factory = ShapeFactory()
+rc = shape_factory.create_rectangle(2, 3)
 use_it(rc)
 
-square = Square(5)
+square = shape_factory.create_square(5)
 use_it(square)
