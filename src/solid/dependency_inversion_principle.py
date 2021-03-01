@@ -2,6 +2,7 @@
 # unaffected by changes in low-level modules, which provide utility features. To
 # achieve that, you need to introduce an abstraction that decouples the high-level
 # and low-level modules from each other.
+from abc import abstractmethod
 from enum import Enum
 
 
@@ -16,7 +17,13 @@ class Person:
         self.name = name
 
 
-class Relationships:
+class RelationshipBrowser:
+    @abstractmethod
+    def find_all_children_of(self, name):
+        pass
+
+
+class Relationships(RelationshipBrowser):
     def __init__(self):
         self.relations = []
 
@@ -24,13 +31,23 @@ class Relationships:
         self.relations.append((parent, Relationship.PARENT, child))
         self.relations.append((child, Relationship.CHILD, parent))
 
+    def find_all_children_of(self, name):
+        for relation in self.relations:
+            if relation[0].name == name and relation[1] == Relationship.PARENT:
+                yield relation[2].name
+
 
 class Research:
+    '''
     def __init__(self, relationships):
         relations = relationships.relations
         for relation in relations:
             if relation[0].name == 'John' and relation[1] == Relationship.PARENT:
                 print(f'John has a child called {relation[2].name}')
+    '''
+    def __init__(self, browser):
+        for child in browser.find_all_children_of('John'):
+            print(f'John has a child called {child}')
 
 
 parent = Person('John')
